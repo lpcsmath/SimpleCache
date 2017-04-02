@@ -24,3 +24,9 @@ cache.get(newKey) match {
   case None    => println("Miss")
 }
 ```
+
+To trace the behaviour, just mix in the Trace trait.
+
+```scala
+val cache = new MyCache with Trace
+```
