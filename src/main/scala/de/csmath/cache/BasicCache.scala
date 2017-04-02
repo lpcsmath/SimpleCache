@@ -24,4 +24,6 @@ trait BasicCache {
 
   def size: Int
 
+  def foreach(f: ((K, V)) => Unit): Unit
+
 }

@@ -19,7 +19,7 @@ class ExpLruCacheTest extends FlatSpec with Matchers {
   }
 
   it should "replace the least recently used entry" in {
-    val cache = new ExpLruCache
+    val cache = new ExpLruCache with Trace
 
     List( (1,"a"), (2,"b"), (3,"c") ) foreach { entry =>
       cache += entry

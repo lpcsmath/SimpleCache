@@ -32,4 +32,6 @@ trait Cache[Key,Value] extends BasicCache {
 
   def size: Int = cache.size
 
+  def foreach(f: ((K, V)) => Unit): Unit = cache.foreach(f)
+
 }
