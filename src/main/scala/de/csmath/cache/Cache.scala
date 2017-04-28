@@ -12,12 +12,18 @@ trait Cache[Key,Value] extends BasicCache {
 
   val cache: mutable.HashMap[K,V] = mutable.HashMap.empty
 
-  def += (kv: (K,V)): Cache[K, V] = {
+  def victim: K
+
+  def += (kv: (K,V)): Cache.this.type = {
+    val (newKey,_) = kv
+    if (size == maxSize && !contains(newKey)) {
+      cache -= victim
+    }
     cache += kv
     this
   }
 
-  def -= (key: K): Cache[K, V] = {
+  def -= (key: K): Cache.this.type = {
     cache -= key
     this
   }

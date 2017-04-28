@@ -13,18 +13,20 @@ trait Lru extends BasicCache {
 
   var time: Long = 0
 
-  abstract override def += (kv: (K,V)): Cache[K, V] = {
-    val (newKey,_) = kv
-    if (size == maxSize && !contains(newKey)) {
-      val (oldTime,displaceKey) = lrus.head
-      deleteLruEntry(oldTime,displaceKey)
-      super.-=(displaceKey)
-    }
-    updateLru(newKey)
-    super.+=(kv)
+  def victim = {
+    val (oldTime,displaceKey) = lrus.head
+    deleteLruEntry(oldTime,displaceKey)
+    displaceKey
   }
 
-  abstract override def -= (key: K) = {
+  abstract override def += (kv: (K,V)): Lru.this.type = {
+    val (newKey,_) = kv
+    updateLru(newKey)
+    super.+=(kv)
+    this
+  }
+
+  abstract override def -= (key: K): Lru.this.type = {
     lrus.find( {case (_,v) => v == key} ) match {
       case Some((time,cacheKey)) =>
         deleteLruEntry(time,cacheKey)

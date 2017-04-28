@@ -15,23 +15,23 @@ trait Trace extends BasicCache {
     super.get(key)
   }
 
-  abstract override def += (kv: (K,V)): Cache[K, V] = {
+  abstract override def += (kv: (K,V)): Trace.this.type = {
     val (key,value) = kv
-    val res = super.+=(kv)
+    super.+=(kv)
     println(s"Enter $value for key $key")
     println("Cache looks now like this:")
     foreach { e =>
       println(e)
     }
-    res
+    this
   }
 
-  abstract override def -= (key: K): Cache[K, V] = {
-    val res = super.-=(key)
+  abstract override def -= (key: K): Trace.this.type = {
+    super.-=(key)
     println(s"Delete value for key $key")
     println("Cache looks now like this:")
     foreach(e => println(e))
-    res
+    this
   }
 
 }

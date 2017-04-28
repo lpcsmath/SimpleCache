@@ -10,9 +10,9 @@ trait BasicCache {
 
   def maxSize: Int = 100
 
-  def += (kv: (K,V)): Cache[K, V]
+  def += (kv: (K,V)): BasicCache.this.type
 
-  def -= (key: K): Cache[K, V]
+  def -= (key: K): BasicCache.this.type
 
   def contains(key: K): Boolean
 
