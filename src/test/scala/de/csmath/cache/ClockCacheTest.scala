@@ -13,7 +13,9 @@ class ClockCacheTest extends FlatSpec with Matchers {
       clockCache += entry
     }
 
-    clockCache       should have size clockCache.maxSize
+    clockCache        should have size clockCache.maxSize
+    clockCache.keyPos should have size clockCache.maxSize
+
   }
 
   it should "replace the entry according to second chance clock algorithm" in new ClockCacheFixture {

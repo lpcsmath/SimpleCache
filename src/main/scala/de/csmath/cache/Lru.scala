@@ -7,11 +7,11 @@ import scala.collection.mutable
   */
 trait Lru extends BasicCache {
 
-  val lrus: mutable.TreeMap[Long,K] = mutable.TreeMap.empty
+  private[cache] val lrus: mutable.TreeMap[Long,K] = mutable.TreeMap.empty
 
-  val invLrus: mutable.HashMap[K,Long] = mutable.HashMap.empty
+  private[cache] val invLrus: mutable.HashMap[K,Long] = mutable.HashMap.empty
 
-  var time: Long = 0
+  private[cache] var time: Long = 0
 
   def victim = {
     val (oldTime,displaceKey) = lrus.head

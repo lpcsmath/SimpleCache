@@ -10,9 +10,8 @@ trait Cache[Key,Value] extends BasicCache {
   type K = Key
   type V = Value
 
-  val cache: mutable.HashMap[K,V] = mutable.HashMap.empty
+  private[cache] val cache: mutable.HashMap[K,V] = mutable.HashMap.empty
 
-  def victim: K
 
   def += (kv: (K,V)): Cache.this.type = {
     val (newKey,_) = kv

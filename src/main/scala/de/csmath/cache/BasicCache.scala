@@ -10,6 +10,8 @@ trait BasicCache {
 
   def maxSize: Int = 100
 
+  protected def victim: K
+
   def += (kv: (K,V)): BasicCache.this.type
 
   def -= (key: K): BasicCache.this.type

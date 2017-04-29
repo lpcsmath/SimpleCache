@@ -7,11 +7,11 @@ import scala.collection.mutable._
   */
 trait Clock extends BasicCache {
 
-  val ring: Array[(K,Boolean)] = new Array(maxSize)
+  private[cache] val ring: Array[(K,Boolean)] = new Array(maxSize)
 
-  val keyPos: HashMap[K,Int] = HashMap.empty
+  private[cache] val keyPos: HashMap[K,Int] = HashMap.empty
 
-  var index: Int = 0
+  private[cache] var index: Int = 0
 
   def moveIndex: Unit = index = (index + 1) % maxSize
 
@@ -24,6 +24,7 @@ trait Clock extends BasicCache {
       key = k
       rBit = r
     }
+    keyPos -= key
     key
   }
 
@@ -40,6 +41,7 @@ trait Clock extends BasicCache {
     if (keyPos.keySet contains key) {
       index = keyPos(key)
       ring(index) = (key,false)
+      keyPos -= key
     }
     super.-=(key)
   }
